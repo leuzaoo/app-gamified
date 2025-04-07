@@ -1,6 +1,7 @@
-import pool from "../config/db.js";
-import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+
+import generateTokenAndSetCookies from "../utils/generateTokenAndSetCookies.js";
+import pool from "../config/db.js";
 
 export async function loginController(req, res) {
   const { email, password } = req.body;
@@ -20,11 +21,7 @@ export async function loginController(req, res) {
       return res.status(400).json({ message: "Credenciais inválidas." });
     }
 
-    const token = jwt.sign(
-      { id: user.id, email: user.email },
-      process.env.JWT_SECRET,
-      { expiresIn: "1h" }
-    );
+    const token = generateTokenAndSetCookies(user.id, res);
 
     res.status(200).json({
       user: { id: user.id, name: user.name, email: user.email },

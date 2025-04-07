@@ -1,7 +1,9 @@
+import cookieParser from "cookie-parser";
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 
+import usernameRoute from "./routes/username.route.js";
 import authRoutes from "./routes/auth.route.js";
 import pool from "./config/db.js";
 
@@ -11,10 +13,12 @@ const PORT = process.env.PORT || 5000;
 
 const app = express();
 
+app.use(cookieParser());
 app.use(express.json());
 app.use(cors());
 
 app.use("/api/auth", authRoutes);
+app.use("/api/username", usernameRoute);
 
 const server = app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
