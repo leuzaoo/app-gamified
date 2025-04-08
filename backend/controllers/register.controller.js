@@ -13,7 +13,7 @@ export async function registerController(req, res) {
     );
 
     if (existingUser.rows.length > 0) {
-      return res.status(500).json({
+      return res.status(400).json({
         message: "Já existe uma conta associada a este email.",
       });
     }
