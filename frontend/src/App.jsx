@@ -6,7 +6,6 @@ import { LoaderCircleIcon } from "lucide-react";
 import SetUsernamePage from "./pages/SetUsernamePage";
 import DashboardPage from "./pages/DashboardPage";
 import RegisterPage from "./pages/RegisterPage";
-import HomePage from "../src/pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 
 import { useAuthStore } from "./store/auth.store";
@@ -53,7 +52,6 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/" element={<HomePage />} />
       <Route
         path="/dashboard"
         element={
