@@ -40,4 +40,27 @@ export const useAuthStore = create((set) => ({
       throw error;
     }
   },
+
+  login: async (email, password) => {
+    set({ isLoading: true, error: null });
+
+    try {
+      const res = await api.post(`${API_URL}/login`, {
+        email,
+        password,
+      });
+
+      set({
+        user: res.data.user,
+        isAuthenticated: true,
+        isLoading: false,
+      });
+    } catch (error) {
+      set({
+        error: error.response?.data?.message || "Erro ao fazer login.",
+        isLoading: false,
+      });
+      throw error;
+    }
+  },
 }));

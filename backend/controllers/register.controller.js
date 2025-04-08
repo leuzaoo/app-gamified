@@ -1,6 +1,6 @@
-import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
+import generateTokenAndSetCookies from "../utils/generateTokenAndSetCookies.js";
 import pool from "../config/db.js";
 
 export async function registerController(req, res) {
@@ -27,11 +27,7 @@ export async function registerController(req, res) {
 
     const newUser = result.rows[0];
 
-    const token = jwt.sign(
-      { id: newUser.id, email: newUser.email },
-      process.env.JWT_SECRET,
-      { expiresIn: "3h" }
-    );
+    const token = generateTokenAndSetCookies(user.id, res);
 
     res.status(201).json({
       user: { id: newUser.id, name: newUser.name, email: newUser.email },
