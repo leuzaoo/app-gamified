@@ -25,12 +25,12 @@ export async function registerController(req, res) {
       [name, email, hashedPassword]
     );
 
-    const newUser = result.rows[0];
+    const user = result.rows[0];
 
     const token = generateTokenAndSetCookies(user.id, res);
 
     res.status(201).json({
-      user: { id: newUser.id, name: newUser.name, email: newUser.email },
+      user: { id: user.id, name: user.name, email: user.email },
       token,
     });
   } catch (error) {
