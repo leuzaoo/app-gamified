@@ -27,6 +27,8 @@ export const useAuthStore = create((set) => ({
         password,
       });
 
+      localStorage.setItem("auth_user", JSON.stringify(res.data.user));
+
       set({
         user: res.data.user,
         isAuthenticated: true,
@@ -50,11 +52,15 @@ export const useAuthStore = create((set) => ({
         password,
       });
 
-      set({
-        user: res.data.user,
-        isAuthenticated: true,
-        isLoading: false,
-      });
+      localStorage.setItem("auth_user", JSON.stringify(res.data.user));
+
+      setTimeout(() => {
+        set({
+          user: res.data.user,
+          isAuthenticated: true,
+          isLoading: false,
+        });
+      }, 2000);
     } catch (error) {
       set({
         error: error.response?.data?.message || "Erro ao fazer login.",
