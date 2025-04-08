@@ -30,7 +30,7 @@ export async function registerController(req, res) {
     const token = generateTokenAndSetCookies(user.id, res);
 
     res.status(201).json({
-      user: { id: user.id, name: user.name, email: user.email },
+      user: { ...user, password: null },
       token,
     });
   } catch (error) {

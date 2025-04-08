@@ -54,19 +54,37 @@ export const useAuthStore = create((set) => ({
 
       localStorage.setItem("auth_user", JSON.stringify(res.data.user));
 
-      setTimeout(() => {
-        set({
-          user: res.data.user,
-          isAuthenticated: true,
-          isLoading: false,
-        });
-      }, 2000);
+      set({
+        user: res.data.user,
+        isAuthenticated: true,
+        isLoading: false,
+      });
     } catch (error) {
       set({
         error: error.response?.data?.message || "Erro ao fazer login.",
         isLoading: false,
       });
       throw error;
+    }
+  },
+
+  authCheck: async () => {
+    await new Promise((resolver) => setTimeout(resolver, 1000));
+    set({ isCheckingAuth: true, error: null });
+
+    try {
+      const res = await api.get(`${API_URL}/check-auth`);
+      set({
+        user: res.data.user,
+        isAuthenticated: true,
+        isCheckingAuth: false,
+      });
+    } catch (error) {
+      set({
+        error: error.response?.data?.message,
+        isCheckingAuth: false,
+        isAuthenticated: false,
+      });
     }
   },
 }));
