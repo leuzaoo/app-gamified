@@ -1,6 +1,7 @@
-import pool from "../config/db.js";
-import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+
+import generateTokenAndSetCookies from "../utils/generateTokenAndSetCookies.js";
+import pool from "../config/db.js";
 
 export async function registerController(req, res) {
   const { name, email, password } = req.body;
@@ -12,9 +13,9 @@ export async function registerController(req, res) {
     );
 
     if (existingUser.rows.length > 0) {
-      return res
-        .status(400)
-        .json({ message: "Já existe uma conta associada a este email." });
+      return res.status(400).json({
+        message: "Já existe uma conta associada a este email.",
+      });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -26,11 +27,7 @@ export async function registerController(req, res) {
 
     const newUser = result.rows[0];
 
-    const token = jwt.sign(
-      { id: newUser.id, email: newUser.email },
-      process.env.JWT_SECRET,
-      { expiresIn: "3h" }
-    );
+    const token = generateTokenAndSetCookies(user.id, res);
 
     res.status(201).json({
       user: { id: newUser.id, name: newUser.name, email: newUser.email },
