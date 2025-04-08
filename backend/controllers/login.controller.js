@@ -24,7 +24,7 @@ export async function loginController(req, res) {
     const token = generateTokenAndSetCookies(user.id, res);
 
     res.status(200).json({
-      user: { id: user.id, name: user.name, email: user.email },
+      user: { ...user, password: null },
       token,
     });
   } catch (error) {
