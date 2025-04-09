@@ -1,5 +1,7 @@
 import React from "react";
 
+import CountdownTimer from "../common/CountdownTimer";
+
 const DailyQuests = () => {
   return (
     <section className="p-4">
@@ -22,7 +24,10 @@ const DailyQuests = () => {
           <span>[0/5km]</span>
         </div>
       </ul>
-      <div className="mt-10 text-center">
+
+      <CountdownTimer />
+
+      <div className="mt-5 text-center">
         <p className="text-lg font-light">
           <span className="text-amber-500 uppercase">Aviso: </span>
           Caso você falhar na missão diária, você não ganhará os pontos
