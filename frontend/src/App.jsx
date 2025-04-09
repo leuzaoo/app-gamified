@@ -7,6 +7,7 @@ import SetUsernamePage from "./pages/SetUsernamePage";
 import DashboardPage from "./pages/DashboardPage";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
+import HomePage from "./pages/HomePage";
 
 import { useAuthStore } from "./store/auth.store";
 
@@ -20,6 +21,10 @@ const ProtectedRoute = ({ children }) => {
 
   if (!user.username && location.pathname !== "/set-username") {
     return <Navigate to="/set-username" replace />;
+  }
+
+  if (user.username && location.pathname === "/set-username") {
+    return <Navigate to="/dashboard" replace />;
   }
 
   return children;
@@ -48,10 +53,16 @@ function App() {
     authCheck();
   }, [authCheck]);
 
-  if (isCheckingAuth) return <LoaderCircleIcon className="animate-spin" />;
+  if (isCheckingAuth)
+    return (
+      <div className="mt-20 flex justify-center">
+        <LoaderCircleIcon className="animate-spin" />
+      </div>
+    );
 
   return (
     <Routes>
+      <Route path="/" element={<HomePage />} />
       <Route
         path="/dashboard"
         element={
