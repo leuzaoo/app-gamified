@@ -16,7 +16,7 @@ export default async function setUsername(req, res) {
     if (existingUser.rows.length > 0) {
       return res
         .status(400)
-        .json({ message: "Nome de usuário já existe, escolha outro." });
+        .json({ message: "Jogador já existe, escolha outro." });
     }
 
     const updatedUser = await pool.query(
