@@ -22,14 +22,11 @@ export const useUsernameStore = create((set) => ({
         username,
       });
 
-      setTimeout(() => {
-        set(
-          {
-            isLoading: true,
-          },
-          1500,
-        );
-      });
+      setTimeout(async () => {
+        set({
+          isLoading: true,
+        });
+      }, 1500);
     } catch (error) {
       set({
         error:

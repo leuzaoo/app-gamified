@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 import { useAuthStore } from "../../store/auth.store";
+import { Loader2Icon } from "lucide-react";
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -60,10 +61,10 @@ const LoginForm = () => {
           {error && <p className="mb-4 text-red-500">{error}</p>}
           <button
             type="submit"
-            className="w-full rounded bg-green-500 p-2 text-white hover:bg-green-600"
+            className="flex w-full justify-center rounded bg-green-500 p-2 text-white hover:bg-green-600"
             disabled={isLoading}
           >
-            {isLoading ? "Loading..." : "Login"}
+            {isLoading ? <Loader2Icon className="animate-spin" /> : "Login"}
           </button>
         </form>
       </div>
