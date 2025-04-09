@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-import { MenuIcon, XIcon } from "lucide-react";
+import { Loader2, Loader2Icon, MenuIcon, XIcon } from "lucide-react";
 
 import { useAuthStore } from "./../store/auth.store";
 
@@ -21,11 +21,23 @@ const MenuItems = [
 const DashboardPage = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const { user } = useAuthStore();
+  const { user, logout, isLoading } = useAuthStore();
 
   const handleMenuOpen = () => {
     setMenuOpen(!menuOpen);
   };
+
+  const handleLogout = async () => {
+    await logout();
+  };
+
+  if (isLoading) {
+    return (
+      <div className="flex h-screen w-full items-center justify-center">
+        <Loader2 className="animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <>
@@ -46,10 +58,18 @@ const DashboardPage = () => {
                 <div className="mt-5 w-full text-center">
                   <ul className="flex flex-col space-y-2">
                     {MenuItems.map((item) => (
-                      <Link className="text-dark" id={item.id} to={item.to}>
-                        <li>{item.label}</li>
-                      </Link>
+                      <>
+                        <Link className="text-dark" id={item.id} to={item.to}>
+                          <li>{item.label}</li>
+                        </Link>
+                      </>
                     ))}
+                    <button
+                      className="text-dark flex cursor-pointer justify-center uppercase"
+                      onClick={handleLogout}
+                    >
+                      Sair
+                    </button>
                   </ul>
                 </div>
               </div>

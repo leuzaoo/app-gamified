@@ -4,6 +4,10 @@ import api from "../services/api";
 
 axios.defaults.withCredentials = true;
 
+const deleteCookie = ({ name }) => {
+  document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+};
+
 const API_URL =
   import.meta.env.MODE === "development"
     ? "http://localhost:5000/api/auth"
@@ -68,8 +72,32 @@ export const useAuthStore = create((set) => ({
     }
   },
 
+  logout: async () => {
+    set({ isLoading: true });
+
+    try {
+      await api.post(`${API_URL}/logout`, null, {
+        withCredentials: true,
+      });
+
+      set({ isLoading: false });
+    } catch (error) {
+      console.error("Erro no servidor ao tentar fazer logout: ", error);
+    } finally {
+      localStorage.removeItem("auth_user");
+      deleteCookie("app-gamified");
+
+      set({
+        user: null,
+        isAuthenticated: false,
+        isLoading: false,
+        error: null,
+      });
+    }
+  },
+
   authCheck: async () => {
-    await new Promise((resolver) => setTimeout(resolver, 1000));
+    await new Promise((resolver) => setTimeout(resolver, 500));
     set({ isCheckingAuth: true, error: null });
 
     try {
