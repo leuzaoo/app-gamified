@@ -1,15 +1,15 @@
-import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 
 import { useWorkoutStore } from "../../store/workout.store";
+import { useAuthStore } from "../../store/auth.store";
 
 import NotificationAlert from "./../ui/NotificationAlert";
 
 const SetWorkoutForm = () => {
   const [workoutType, setWorkoutType] = useState("");
-  const navigate = useNavigate();
 
   const { chooseWorkout } = useWorkoutStore();
+  const { authCheck } = useAuthStore();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,7 +17,7 @@ const SetWorkoutForm = () => {
     try {
       if (workoutType) {
         await chooseWorkout(workoutType);
-        navigate("/dashboard");
+        await authCheck();
       }
     } catch (error) {
       console.log(error);

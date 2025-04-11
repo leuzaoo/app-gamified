@@ -9,27 +9,35 @@ export default async function setWorkoutController(req, res) {
   }
 
   try {
-    const existing = await pool.query(
+    const existingWorkout = await pool.query(
       "SELECT id FROM workouts WHERE user_id = $1",
       [userId]
     );
 
-    let result;
-    if (existing.rows.length > 0) {
-      result = await pool.query(
+    let workoutResult;
+    if (existingWorkout.rows.length > 0) {
+      workoutResult = await pool.query(
         "UPDATE workouts SET workout_type = $1, updated_at = NOW() WHERE user_id = $2 RETURNING *",
         [workout_type, userId]
       );
     } else {
-      result = await pool.query(
+      workoutResult = await pool.query(
         "INSERT INTO workouts (user_id, workout_type) VALUES ($1, $2) RETURNING *",
         [userId, workout_type]
       );
     }
 
-    res.status(200).json({ workout: result.rows[0] });
+    const userResult = await pool.query(
+      "UPDATE users SET workout_type = $1 WHERE id = $2 RETURNING *",
+      [workout_type, userId]
+    );
+
+    res.status(200).json({
+      workout: workoutResult.rows[0],
+      user: userResult.rows[0],
+    });
   } catch (error) {
-    console.error("Error in setWorkoutController: ", error);
+    console.error("Error in setWorkoutController:", error);
     res.status(500).json({ message: "Erro no servidor interno." });
   }
 }
