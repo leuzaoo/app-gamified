@@ -1,10 +1,13 @@
+import React from "react";
+
 import {
   BrainIcon,
   DumbbellIcon,
   FootprintsIcon,
   HeartCrackIcon,
 } from "lucide-react";
-import React from "react";
+
+import XPBar from "./XPBar";
 
 const PlayerStats = ({ user }) => {
   return (
@@ -24,8 +27,14 @@ const PlayerStats = ({ user }) => {
           <p className="font-light">
             Título: <span className="font-medium">Caçador de onça</span>
           </p>
+          <p className="font-light">
+            Tipo de treino:{" "}
+            <span className="font-medium">{user.workout_type}</span>
+          </p>
         </div>
       </div>
+
+      <XPBar xp={user.xp} />
 
       <div className="my-5 border">
         <div className="uppercase">
