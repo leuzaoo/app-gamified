@@ -13,5 +13,5 @@ await pool.query(`
 console.log("Workouts table created successfully");
 
 await pool.end();
-console.log("Database connection closed after created users table");
+console.log("Database connection closed after created workout table");
 process.exit();
