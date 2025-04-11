@@ -5,6 +5,7 @@ import cors from "cors";
 
 import usernameRoutes from "./routes/username.route.js";
 import workoutRoutes from "./routes/workout.route.js";
+import missionRoutes from "./routes/mission.route.js";
 import authRoutes from "./routes/auth.route.js";
 import pool from "./config/db.js";
 
@@ -19,6 +20,7 @@ app.use(express.json());
 app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
 
 app.use("/api/username", usernameRoutes);
+app.use("/api/mission", missionRoutes);
 app.use("/api/workout", workoutRoutes);
 app.use("/api/auth", authRoutes);
 
