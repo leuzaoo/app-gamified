@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",
-    "create:userstable": "node ./scripts/userTable.js"
+    "create:userstable": "node ./scripts/userTable.js",
+    "create:workouttable": "node ./scripts/workoutTable.js"
   },
   "keywords": [],
   "author": "",
