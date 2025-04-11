@@ -1,4 +1,5 @@
 import React from "react";
+
 import SetWorkoutForm from "../components/forms/SetWorkoutForm";
 
 const SetWorkoutPage = () => {

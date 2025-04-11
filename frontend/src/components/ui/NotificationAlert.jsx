@@ -3,7 +3,7 @@ import React from "react";
 
 const NotificationAlert = () => {
   return (
-    <div className="flex items-center justify-center gap-5 text-amber-400">
+    <div className="flex items-center justify-center gap-5">
       <p className="border p-2">
         <CircleAlertIcon size={40} />
       </p>
