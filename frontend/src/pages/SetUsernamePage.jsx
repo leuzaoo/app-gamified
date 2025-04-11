@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 
-import { CircleAlertIcon, Loader2Icon } from "lucide-react";
+import { Loader2Icon } from "lucide-react";
 
 import { useUsernameStore } from "../store/username.store";
 import { useAuthStore } from "./../store/auth.store";
+
+import NotificationAlert from "../components/ui/NotificationAlert";
 
 const SetUsernamePage = () => {
   const [username, setUsername] = useState("");
@@ -24,12 +26,7 @@ const SetUsernamePage = () => {
   return (
     <div className="flex h-screen w-full items-center justify-center">
       <div className="max-w-3xl border-2 px-20 py-10">
-        <div className="flex items-center justify-center gap-5">
-          <p className="border p-2">
-            <CircleAlertIcon size={40} />
-          </p>
-          <p className="border px-5 py-2 text-4xl uppercase">Notificação</p>
-        </div>
+        <NotificationAlert />
 
         <p className="mt-5 text-2xl">
           Identifiquei um <span className="text-amber-400">novo jogador</span>{" "}

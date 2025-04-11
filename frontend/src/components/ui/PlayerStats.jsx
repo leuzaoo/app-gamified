@@ -12,12 +12,12 @@ const PlayerStats = ({ user }) => {
       <h1 className="mx-auto max-w-max border px-12 text-2xl uppercase">
         Status
       </h1>
-      <div className="flex items-center">
-        <div className="mx-auto mt-4 flex max-w-max flex-col items-center uppercase">
+      <div className="mt-4 flex w-full items-center justify-center gap-10">
+        <div className="flex max-w-max flex-col items-center uppercase">
           <span className="text-5xl">22</span>
           <span className="text-xs font-light">Nível</span>
         </div>
-        <div className="mt-4 flex flex-col space-y-1 text-xs uppercase">
+        <div className="flex flex-col space-y-1 text-xs uppercase">
           <p className="font-light">
             Jogador: <span className="font-medium">{user.username}</span>
           </p>

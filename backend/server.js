@@ -3,7 +3,8 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 
-import usernameRoute from "./routes/username.route.js";
+import usernameRoutes from "./routes/username.route.js";
+import workoutRoutes from "./routes/workout.route.js";
 import authRoutes from "./routes/auth.route.js";
 import pool from "./config/db.js";
 
@@ -17,8 +18,9 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
 
+app.use("/api/username", usernameRoutes);
+app.use("/api/workout", workoutRoutes);
 app.use("/api/auth", authRoutes);
-app.use("/api/username", usernameRoute);
 
 const server = app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);

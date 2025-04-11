@@ -8,6 +8,7 @@ await pool.query(
       email VARCHAR(255) UNIQUE NOT NULL,
       username VARCHAR(20) UNIQUE,
       password VARCHAR(255) NOT NULL,
+      workout_type VARCHAR(20),
       created_at TIMESTAMP DEFAULT NOW()
     );
   `

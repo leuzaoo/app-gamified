@@ -4,6 +4,7 @@ import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { LoaderCircleIcon } from "lucide-react";
 
 import SetUsernamePage from "./pages/SetUsernamePage";
+import SetWorkoutPage from "./pages/SetWorkoutPage";
 import DashboardPage from "./pages/DashboardPage";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
@@ -19,11 +20,24 @@ const ProtectedRoute = ({ children }) => {
     return <Navigate to="/login" replace />;
   }
 
-  if (!user.username && location.pathname !== "/set-username") {
-    return <Navigate to="/set-username" replace />;
+  if (!user.username) {
+    if (location.pathname !== "/set-username") {
+      return <Navigate to="/set-username" replace />;
+    }
+    return children;
   }
 
-  if (user.username && location.pathname === "/set-username") {
+  if (!user.workout_type) {
+    if (location.pathname !== "/set-workout") {
+      return <Navigate to="/set-workout" replace />;
+    }
+    return children;
+  }
+
+  if (
+    location.pathname === "/set-username" ||
+    location.pathname === "/set-workout"
+  ) {
     return <Navigate to="/dashboard" replace />;
   }
 
@@ -76,6 +90,14 @@ function App() {
         element={
           <ProtectedRoute>
             <SetUsernamePage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/set-workout"
+        element={
+          <ProtectedRoute>
+            <SetWorkoutPage />
           </ProtectedRoute>
         }
       />
