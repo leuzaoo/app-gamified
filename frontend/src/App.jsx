@@ -4,6 +4,7 @@ import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { LoaderCircleIcon } from "lucide-react";
 
 import SetUsernamePage from "./pages/SetUsernamePage";
+import SetWorkoutPage from "./pages/SetWorkoutPage";
 import DashboardPage from "./pages/DashboardPage";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
@@ -76,6 +77,14 @@ function App() {
         element={
           <ProtectedRoute>
             <SetUsernamePage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/set-workout"
+        element={
+          <ProtectedRoute>
+            <SetWorkoutPage />
           </ProtectedRoute>
         }
       />
