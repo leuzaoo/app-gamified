@@ -18,7 +18,7 @@ export const useUsernameStore = create((set) => ({
     set({ isLoading: false, error: null });
 
     try {
-      await api.put(`${API_URL}`, {
+      await api.put(`${API_URL}/set-username`, {
         username,
       });
 
