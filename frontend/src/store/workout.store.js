@@ -14,13 +14,15 @@ export const useWorkoutStore = create((set) => ({
   error: null,
   message: null,
 
-  chooseWorkout: async (workout_type) => {
-    set({ isLoading: false, error: null });
+  chooseWorkout: async (workout_type, training_experience) => {
+    set({ isLoading: true, error: null });
 
     try {
       await api.post(`${API_URL}/set-workout`, {
         workout_type,
+        training_experience,
       });
+      set({ isLoading: false });
     } catch (error) {
       set({
         error:
