@@ -33,4 +33,26 @@ export const useWorkoutStore = create((set) => ({
       throw error;
     }
   },
+
+  completeWorkout: async (pushUps, squats, sitUps, runningDistance) => {
+    set({ isLoading: true, error: null });
+    try {
+      const response = await api.post(`${API_URL}/complete-workout`, {
+        pushUps,
+        squats,
+        sitUps,
+        runningDistance,
+      });
+      set({ isLoading: false });
+      return response.data;
+    } catch (error) {
+      set({
+        error:
+          error.response?.data?.message ||
+          "Ocorreu um erro inesperado ao registrar o treino. Tente mais tarde.",
+        isLoading: false,
+      });
+      throw error;
+    }
+  },
 }));

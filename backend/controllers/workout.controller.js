@@ -48,3 +48,53 @@ export default async function setWorkoutController(req, res) {
     res.status(500).json({ message: "Erro no servidor interno." });
   }
 }
+
+export async function completeWorkoutController(req, res) {
+  const { pushUps, squats, sitUps, runningDistance } = req.body;
+  const userId = req.userId;
+
+  const goalPushUps = 20;
+  const goalSquats = 20;
+  const goalSitUps = 20;
+  const goalRunning = 2;
+
+  const strengthPoints = Math.min(
+    (pushUps / goalPushUps + squats / goalSquats + sitUps / goalSitUps) * 10,
+    30
+  );
+
+  const agilityPoints = Math.min((runningDistance / goalRunning) * 10, 10);
+
+  const strengthPointsInt = Math.floor(strengthPoints);
+  const agilityPointsInt = Math.floor(agilityPoints);
+
+  try {
+    const updateUserQuery = `
+      UPDATE users 
+      SET 
+        attributes = jsonb_set(
+          jsonb_set(attributes, '{strength}', to_jsonb(((attributes->>'strength')::int + $1)), false),
+          '{agility}', to_jsonb(((attributes->>'agility')::int + $2)), false
+        ),
+        xp = xp + $3
+      WHERE id = $4
+      RETURNING id, attributes, xp;
+    `;
+    const totalXP = strengthPointsInt + agilityPointsInt;
+
+    const userResult = await pool.query(updateUserQuery, [
+      strengthPointsInt,
+      agilityPointsInt,
+      totalXP,
+      userId,
+    ]);
+
+    res.status(200).json({
+      message: "Treino registrado com sucesso!",
+      updatedStats: userResult.rows[0],
+    });
+  } catch (error) {
+    console.error("Error trying to register workout: ", error);
+    res.status(500).json({ message: "Erro no servidor interno." });
+  }
+}
