@@ -30,10 +30,6 @@ const PlayerStats = ({ user }) => {
           <p className="font-light">
             Título: <span className="font-medium">Caçador de onça</span>
           </p>
-          <p className="font-light">
-            Tipo de treino:{" "}
-            <span className="font-medium">{user.workout_type}</span>
-          </p>
         </div>
       </div>
 
@@ -45,25 +41,37 @@ const PlayerStats = ({ user }) => {
             <li className="flex items-center gap-2">
               <DumbbellIcon size={20} />{" "}
               <p className="flex items-center gap-1 font-extralight">
-                FOR: <span className="text-lg font-medium">22</span>
+                FOR:{" "}
+                <span className="text-lg font-medium">
+                  {user.attributes.strength}
+                </span>
               </p>
             </li>
             <li className="flex items-center gap-2">
               <BrainIcon size={20} />{" "}
               <p className="flex items-center gap-1 font-extralight">
-                INT: <span className="text-lg font-medium">10</span>
+                INT:{" "}
+                <span className="text-lg font-medium">
+                  {user.attributes.intelligence}
+                </span>
               </p>
             </li>
             <li className="flex items-center gap-2">
               <HeartCrackIcon size={20} />{" "}
               <p className="flex items-center gap-1 font-extralight">
-                VIT: <span className="text-lg font-medium">10</span>
+                VIT:{" "}
+                <span className="text-lg font-medium">
+                  {user.attributes.vitality}
+                </span>
               </p>
             </li>
             <li className="flex items-center gap-2">
               <FootprintsIcon size={20} />{" "}
               <p className="flex items-center gap-1 font-extralight">
-                AGI: <span className="text-lg font-medium">10</span>
+                AGI:{" "}
+                <span className="text-lg font-medium">
+                  {user.attributes.agility}
+                </span>
               </p>
             </li>
           </ul>
