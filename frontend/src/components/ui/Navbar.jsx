@@ -26,13 +26,13 @@ const Navbar = ({ menuOpen, handleMenuOpen, handleLogout }) => {
       <div>
         {menuOpen ? (
           <>
-            <div className="bg-light absolute top-0 right-0 flex h-screen w-screen flex-col items-end p-4">
+            <div className="bg-light absolute top-0 right-0 z-50 flex h-screen w-screen flex-col items-end p-4">
               <XIcon
                 size={40}
                 onClick={handleMenuOpen}
                 className="text-dark cursor-pointer"
               />
-              <div className="mt-5 w-full text-center">
+              <div className="z-50 mt-5 w-full text-center">
                 <ul className="flex flex-col space-y-2">
                   {MenuItems.map((item) => (
                     <Link className="text-dark" key={item.id} to={item.to}>
