@@ -9,7 +9,9 @@ await pool.query(
       username VARCHAR(20) UNIQUE,
       password VARCHAR(255) NOT NULL,
       xp INTEGER DEFAULT 0,
+      attributes JSONB DEFAULT '{"strength": 0, "vitality": 0, "intelligence": 0, "agility": 0}',
       workout_type VARCHAR(20),
+      training_experience VARCHAR(50),
       created_at TIMESTAMP DEFAULT NOW()
     );
   `

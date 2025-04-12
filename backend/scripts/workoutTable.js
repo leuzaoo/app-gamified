@@ -5,6 +5,7 @@ await pool.query(`
     id SERIAL PRIMARY KEY,
     user_id INTEGER UNIQUE REFERENCES users(id) ON DELETE CASCADE,
     workout_type VARCHAR(20) NOT NULL CHECK (workout_type IN ('academia', 'casa/rua')),
+    training_experience VARCHAR(50) CHECK (training_experience IN ('beginner', 'regular', 'advanced')),
     created_at TIMESTAMP DEFAULT NOW(),
     updated_at TIMESTAMP DEFAULT NOW()
   );

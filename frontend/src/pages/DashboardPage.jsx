@@ -6,6 +6,7 @@ import { useAuthStore } from "./../store/auth.store";
 import PlayerStats from "../components/ui/PlayerStats";
 import Navbar from "../components/ui/Navbar";
 import DailyQuests from "../components/ui/DailyQuests";
+import DailyWorkoutRecordForm from "../components/forms/DailyWorkoutRecordForm";
 
 const DashboardPage = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -38,6 +39,7 @@ const DashboardPage = () => {
       <PlayerStats user={user} />
       <hr className="mx-4 mt-4 border-t opacity-20" />
       <DailyQuests />
+      <DailyWorkoutRecordForm />
     </>
   );
 };
