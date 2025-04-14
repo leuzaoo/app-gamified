@@ -62,7 +62,6 @@ export async function completeWorkoutController(req, res) {
     (pushUps / goalPushUps + squats / goalSquats + sitUps / goalSitUps) * 10,
     30
   );
-
   const agilityPoints = Math.min((runningDistance / goalRunning) * 10, 10);
 
   const strengthPointsInt = Math.floor(strengthPoints);
@@ -81,7 +80,6 @@ export async function completeWorkoutController(req, res) {
       RETURNING id, attributes, xp;
     `;
     const totalXP = strengthPointsInt + agilityPointsInt;
-
     const userResult = await pool.query(updateUserQuery, [
       strengthPointsInt,
       agilityPointsInt,
@@ -90,16 +88,17 @@ export async function completeWorkoutController(req, res) {
     ]);
 
     const insertRecordQuery = `
-    INSERT INTO daily_workout_records (user_id, pushups, squats, situps, running_distance)
-    VALUES ($1, $2, $3, $4, $5)
-    ON CONFLICT (user_id, record_date) DO UPDATE
-    SET pushups = EXCLUDED.pushups,
-        squats = EXCLUDED.squats,
-        situps = EXCLUDED.situps,
-        running_distance = EXCLUDED.running_distance,
-        updated_at = NOW()
-    RETURNING *;
-  `;
+     INSERT INTO daily_workout_records AS d (user_id, pushups, squats, situps, running_distance)
+      VALUES ($1, $2, $3, $4, $5)
+      ON CONFLICT (user_id, record_date) DO UPDATE
+      SET pushups = d.pushups + EXCLUDED.pushups,
+          squats = d.squats + EXCLUDED.squats,
+          situps = d.situps + EXCLUDED.situps,
+          running_distance = d.running_distance + EXCLUDED.running_distance,
+          updated_at = NOW()
+      RETURNING *;
+
+    `;
 
     const recordResult = await pool.query(insertRecordQuery, [
       userId,
@@ -110,7 +109,7 @@ export async function completeWorkoutController(req, res) {
     ]);
 
     res.status(200).json({
-      message: "Treino registrado com sucesso!",
+      message: "Treino registrado com sucesso! Página será recarregada.",
       updatedStats: userResult.rows[0],
       dailyRecord: recordResult.rows[0],
     });

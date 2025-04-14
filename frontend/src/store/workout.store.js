@@ -43,7 +43,7 @@ export const useWorkoutStore = create((set) => ({
         sitUps,
         runningDistance,
       });
-      set({ isLoading: false });
+      set({ isLoading: false, message: response?.data?.message });
       return response.data;
     } catch (error) {
       set({
