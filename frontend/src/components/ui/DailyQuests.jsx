@@ -1,10 +1,18 @@
 import React, { useEffect, useState } from "react";
-
-import CountdownTimer from "../common/CountdownTimer";
 import { PencilIcon } from "lucide-react";
+
 import { useWorkoutStore } from "../../store/workout.store";
 
+import CountdownTimer from "../common/CountdownTimer";
+
 const DailyQuests = ({ openDailyRecord }) => {
+  const [goals, setGoals] = useState({
+    pushups_goal: 0,
+    squats_goal: 0,
+    situps_goal: 0,
+    running_goal: 0,
+  });
+
   const [record, setRecord] = useState({
     pushups: 0,
     squats: 0,
@@ -14,7 +22,21 @@ const DailyQuests = ({ openDailyRecord }) => {
 
   const [loading, setLoading] = useState(true);
 
-  const { getDailyWorkout } = useWorkoutStore();
+  const { getDailyWorkout, getDailyWorkoutGoals } = useWorkoutStore();
+
+  useEffect(() => {
+    async function fetchGoals() {
+      try {
+        const res = await getDailyWorkoutGoals();
+        setGoals(res.goals);
+      } catch (error) {
+        console.error("Erro ao buscar os objetivos de treino: ", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchGoals();
+  }, [getDailyWorkoutGoals]);
 
   useEffect(() => {
     async function fetchDailyWorkout() {
@@ -36,28 +58,28 @@ const DailyQuests = ({ openDailyRecord }) => {
       id: 1,
       title: "Flexões",
       progress: record.pushups || 0,
-      goal: 20,
+      goal: goals.pushups_goal,
       unit: "",
     },
     {
       id: 2,
       title: "Agachamentos",
       progress: record.squats || 0,
-      goal: 20,
+      goal: goals.squats_goal,
       unit: "",
     },
     {
       id: 3,
       title: "Abdominais",
       progress: record.situps || 0,
-      goal: 20,
+      goal: goals.situps_goal,
       unit: "",
     },
     {
       id: 4,
       title: "Corrida",
       progress: record.running_distance || 0,
-      goal: 2,
+      goal: goals.running_goal,
       unit: "km",
     },
   ];

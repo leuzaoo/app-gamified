@@ -73,4 +73,21 @@ export const useWorkoutStore = create((set) => ({
       throw error;
     }
   },
+
+  getDailyWorkoutGoals: async () => {
+    set({ isLoading: true, error: null });
+    try {
+      const response = await api.get(`${API_URL}/get-daily-goals`);
+      set({ isLoading: false });
+      return response.data;
+    } catch (error) {
+      set({
+        error:
+          error?.response?.data?.message ||
+          "Ocorreu um erro inesperado ao buscar o goal diário do treino.",
+        isLoading: false,
+      });
+      throw error;
+    }
+  },
 }));

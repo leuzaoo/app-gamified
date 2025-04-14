@@ -23,3 +23,33 @@ export async function getDailyWorkoutController(req, res) {
     res.status(500).json({ message: "Erro no servidor interno." });
   }
 }
+
+export async function getDailyGoalsController(req, res) {
+  const userId = req.userId;
+
+  try {
+    const query = `
+      SELECT w.training_experience, 
+             wg.pushups_goal, 
+             wg.squats_goal, 
+             wg.situps_goal, 
+             wg.running_goal
+      FROM workouts w
+      JOIN workout_goals wg 
+           ON w.training_experience = wg.training_experience
+      WHERE w.user_id = $1;
+    `;
+    const result = await pool.query(query, [userId]);
+
+    if (result.rows.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "Nenhum objetivo encontrado para o usuário." });
+    }
+
+    res.status(200).json({ goals: result.rows[0] });
+  } catch (error) {
+    console.error("Erro ao buscar os goals de treino:", error);
+    res.status(500).json({ message: "Erro no servidor interno." });
+  }
+}
