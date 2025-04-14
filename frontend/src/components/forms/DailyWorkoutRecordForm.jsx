@@ -29,7 +29,7 @@ const DailyWorkoutRecordForm = () => {
   };
 
   return (
-    <div className="mx-auto max-w-md rounded p-4 shadow">
+    <div className="bg-dark absolute top-0 left-0 mx-auto h-screen w-screen max-w-md rounded p-4 shadow">
       <h2 className="mb-4 text-center text-xl font-bold">
         Registro do Treino Diário
       </h2>

@@ -1,4 +1,4 @@
-import pool from "../config/db.js";
+import pool from "../../config/db.js";
 
 export default async function setWorkoutController(req, res) {
   const { workout_type, training_experience } = req.body;
@@ -89,9 +89,30 @@ export async function completeWorkoutController(req, res) {
       userId,
     ]);
 
+    const insertRecordQuery = `
+    INSERT INTO daily_workout_records (user_id, pushups, squats, situps, running_distance)
+    VALUES ($1, $2, $3, $4, $5)
+    ON CONFLICT (user_id, record_date) DO UPDATE
+    SET pushups = EXCLUDED.pushups,
+        squats = EXCLUDED.squats,
+        situps = EXCLUDED.situps,
+        running_distance = EXCLUDED.running_distance,
+        updated_at = NOW()
+    RETURNING *;
+  `;
+
+    const recordResult = await pool.query(insertRecordQuery, [
+      userId,
+      pushUps,
+      squats,
+      sitUps,
+      runningDistance,
+    ]);
+
     res.status(200).json({
       message: "Treino registrado com sucesso!",
       updatedStats: userResult.rows[0],
+      dailyRecord: recordResult.rows[0],
     });
   } catch (error) {
     console.error("Error trying to register workout: ", error);
