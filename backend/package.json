@@ -8,7 +8,8 @@
     "dev": "nodemon server.js",
     "create:userstable": "node ./scripts/userTable.js",
     "create:workouttable": "node ./scripts/workoutTable.js",
-    "create:dailyworkouttable": "node ./scripts/dailyWorkoutTable.js"
+    "create:dailyworkouttable": "node ./scripts/dailyWorkoutTable.js",
+    "create:workoutgoalstable": "node ./scripts/workoutGoalsTable.js"
   },
   "keywords": [],
   "author": "",
