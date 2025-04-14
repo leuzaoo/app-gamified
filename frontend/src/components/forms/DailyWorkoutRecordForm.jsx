@@ -9,9 +9,8 @@ const DailyWorkoutRecordForm = () => {
   const [squats, setSquats] = useState("");
   const [sitUps, setSitUps] = useState("");
   const [runningDistance, setRunningDistance] = useState("");
-  const [message, setMessage] = useState("");
 
-  const { completeWorkout, isLoading, error } = useWorkoutStore();
+  const { completeWorkout, isLoading, error, message } = useWorkoutStore();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,14 +21,16 @@ const DailyWorkoutRecordForm = () => {
       const r = Number(runningDistance) || 0;
 
       await completeWorkout(p, s, a, r);
-      setMessage("Treino registrado com sucesso!");
+      setTimeout(() => {
+        location.reload();
+      }, 2000);
     } catch (err) {
       console.error("Erro ao registrar treino:", err);
     }
   };
 
   return (
-    <div className="mx-auto max-w-md rounded p-4 shadow">
+    <div className="bg-dark absolute top-0 left-0 mx-auto h-screen w-screen max-w-md rounded p-4 shadow">
       <h2 className="mb-4 text-center text-xl font-bold">
         Registro do Treino Diário
       </h2>

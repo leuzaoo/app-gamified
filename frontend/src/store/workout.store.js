@@ -43,13 +43,31 @@ export const useWorkoutStore = create((set) => ({
         sitUps,
         runningDistance,
       });
-      set({ isLoading: false });
+      set({ isLoading: false, message: response?.data?.message });
       return response.data;
     } catch (error) {
       set({
         error:
           error.response?.data?.message ||
           "Ocorreu um erro inesperado ao registrar o treino. Tente mais tarde.",
+        isLoading: false,
+      });
+      throw error;
+    }
+  },
+
+  getDailyWorkout: async () => {
+    set({ isLoading: true, error: null });
+
+    try {
+      const response = await api.get(`${API_URL}/get-daily-workout`);
+      set({ isLoading: null });
+      return response.data;
+    } catch (error) {
+      set({
+        error:
+          error.response?.data?.message ||
+          "Ocorreu um erro inesperado ao pegar o treino diário.",
         isLoading: false,
       });
       throw error;

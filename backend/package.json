@@ -7,7 +7,8 @@
     "start": "node server.js",
     "dev": "nodemon server.js",
     "create:userstable": "node ./scripts/userTable.js",
-    "create:workouttable": "node ./scripts/workoutTable.js"
+    "create:workouttable": "node ./scripts/workoutTable.js",
+    "create:dailyworkouttable": "node ./scripts/dailyWorkoutTable.js"
   },
   "keywords": [],
   "author": "",

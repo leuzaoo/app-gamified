@@ -61,7 +61,7 @@ const RedirectAuthenticatedUser = ({ children }) => {
 
 function App() {
   const { isCheckingAuth, authCheck, user } = useAuthStore();
-  console.log(user);
+  console.log("Usuário logado: ", user);
 
   useEffect(() => {
     authCheck();
