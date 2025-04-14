@@ -53,21 +53,38 @@ export async function completeWorkoutController(req, res) {
   const { pushUps, squats, sitUps, runningDistance } = req.body;
   const userId = req.userId;
 
-  const goalPushUps = 20;
-  const goalSquats = 20;
-  const goalSitUps = 20;
-  const goalRunning = 2;
-
-  const strengthPoints = Math.min(
-    (pushUps / goalPushUps + squats / goalSquats + sitUps / goalSitUps) * 10,
-    30
-  );
-  const agilityPoints = Math.min((runningDistance / goalRunning) * 10, 10);
-
-  const strengthPointsInt = Math.floor(strengthPoints);
-  const agilityPointsInt = Math.floor(agilityPoints);
-
   try {
+    const goalsRes = await pool.query(
+      `
+      SELECT wg.pushups_goal, wg.squats_goal, wg.situps_goal, wg.running_goal
+      FROM workout_goals wg
+      JOIN workouts w ON w.training_experience = wg.training_experience
+      WHERE w.user_id = $1
+      `,
+      [userId]
+    );
+
+    if (goalsRes.rows.length === 0) {
+      return res.status(400).json({
+        message: "Objetivos de treino não encontrados para este usuário.",
+      });
+    }
+
+    const { pushups_goal, squats_goal, situps_goal, running_goal } =
+      goalsRes.rows[0];
+
+    const strengthPoints = Math.min(
+      (pushUps / pushups_goal + squats / squats_goal + sitUps / situps_goal) *
+        (8 / 3),
+      16
+    );
+
+    const agilityPoints = Math.min((runningDistance / running_goal) * 4, 8);
+
+    const strengthPointsInt = Math.floor(strengthPoints);
+    const agilityPointsInt = Math.floor(agilityPoints);
+    const totalXP = strengthPointsInt + agilityPointsInt;
+
     const updateUserQuery = `
       UPDATE users 
       SET 
@@ -79,7 +96,7 @@ export async function completeWorkoutController(req, res) {
       WHERE id = $4
       RETURNING id, attributes, xp;
     `;
-    const totalXP = strengthPointsInt + agilityPointsInt;
+
     const userResult = await pool.query(updateUserQuery, [
       strengthPointsInt,
       agilityPointsInt,
@@ -88,16 +105,15 @@ export async function completeWorkoutController(req, res) {
     ]);
 
     const insertRecordQuery = `
-     INSERT INTO daily_workout_records AS d (user_id, pushups, squats, situps, running_distance)
+      INSERT INTO daily_workout_records (user_id, pushups, squats, situps, running_distance)
       VALUES ($1, $2, $3, $4, $5)
       ON CONFLICT (user_id, record_date) DO UPDATE
-      SET pushups = d.pushups + EXCLUDED.pushups,
-          squats = d.squats + EXCLUDED.squats,
-          situps = d.situps + EXCLUDED.situps,
-          running_distance = d.running_distance + EXCLUDED.running_distance,
+      SET pushups = daily_workout_records.pushups + EXCLUDED.pushups,
+          squats = daily_workout_records.squats + EXCLUDED.squats,
+          situps = daily_workout_records.situps + EXCLUDED.situps,
+          running_distance = daily_workout_records.running_distance + EXCLUDED.running_distance,
           updated_at = NOW()
       RETURNING *;
-
     `;
 
     const recordResult = await pool.query(insertRecordQuery, [
