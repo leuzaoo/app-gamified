@@ -104,7 +104,7 @@ const WorkoutHistoryHeatmap = () => {
           </div>
 
           <div className="max-w-max overflow-x-auto">
-            <div className="flex flex-nowrap gap-1">
+            <div className="flex flex-nowrap gap-[1px] pl-1">
               {weeks.map((week, wIndex) => (
                 <div
                   key={`week-${wIndex}`}
@@ -120,7 +120,7 @@ const WorkoutHistoryHeatmap = () => {
                     return (
                       <div
                         key={dateStr}
-                        className="m-0.5 h-4 w-4"
+                        className="m-[1px] h-3.5 w-3.5 rounded"
                         style={style}
                         title={`${dateStr}: intensidade ${intensity}`}
                       ></div>
@@ -136,19 +136,19 @@ const WorkoutHistoryHeatmap = () => {
       <div className="mt-4 flex items-center text-xs">
         <span className="mr-2">Menos</span>
         <div
-          className="mr-1 h-4 w-4"
+          className="mr-1 h-4 w-4 rounded"
           style={{ backgroundColor: "rgba(34,197,94,0.3)" }}
         ></div>
         <div
-          className="mr-1 h-4 w-4"
+          className="mr-1 h-4 w-4 rounded"
           style={{ backgroundColor: "rgba(34,197,94,0.5)" }}
         ></div>
         <div
-          className="mr-1 h-4 w-4"
+          className="mr-1 h-4 w-4 rounded"
           style={{ backgroundColor: "rgba(34,197,94,0.7)" }}
         ></div>
         <div
-          className="mr-1 h-4 w-4"
+          className="mr-1 h-4 w-4 rounded"
           style={{ backgroundColor: "rgba(34,197,94,1)" }}
         ></div>
         <span className="ml-2">Mais</span>
