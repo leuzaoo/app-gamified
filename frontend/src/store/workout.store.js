@@ -34,13 +34,13 @@ export const useWorkoutStore = create((set) => ({
     }
   },
 
-  completeWorkout: async (pushUps, squats, sitUps, runningDistance) => {
+  completeWorkout: async (pushups, squats, situps, runningDistance) => {
     set({ isLoading: true, error: null });
     try {
       const response = await api.post(`${API_URL}/complete-workout`, {
-        pushUps,
+        pushups,
         squats,
-        sitUps,
+        situps,
         runningDistance,
       });
       set({ isLoading: false, message: response?.data?.message });
@@ -85,6 +85,26 @@ export const useWorkoutStore = create((set) => ({
         error:
           error?.response?.data?.message ||
           "Ocorreu um erro inesperado ao buscar o goal diário do treino.",
+        isLoading: false,
+      });
+      throw error;
+    }
+  },
+
+  getWorkoutHistory: async (start, end) => {
+    set({ isLoading: true, error: null });
+
+    try {
+      const response = await api.get(
+        `${API_URL}/history?start=${start}&end=${end}`,
+        set({ isLoading: false }),
+      );
+      return response.data;
+    } catch (error) {
+      set({
+        error:
+          error.response?.data?.message ||
+          "Ocorreu um erro inesperado ao pegar o histórico de treino.",
         isLoading: false,
       });
       throw error;
