@@ -1,5 +1,11 @@
 import pool from "../../config/db.js";
 
+function getDate12MonthsAgo() {
+  const d = new Date();
+  d.setFullYear(d.getFullYear() - 1);
+  return d.toISOString().substring(0, 10);
+}
+
 export default async function setWorkoutController(req, res) {
   const { workout_type, training_experience } = req.body;
   const userId = req.userId;
@@ -50,7 +56,7 @@ export default async function setWorkoutController(req, res) {
 }
 
 export async function completeWorkoutController(req, res) {
-  const { pushUps, squats, sitUps, runningDistance } = req.body;
+  const { pushups, squats, situps, runningDistance } = req.body;
   const userId = req.userId;
 
   try {
@@ -74,7 +80,7 @@ export async function completeWorkoutController(req, res) {
       goalsRes.rows[0];
 
     const strengthPoints = Math.min(
-      (pushUps / pushups_goal + squats / squats_goal + sitUps / situps_goal) *
+      (pushups / pushups_goal + squats / squats_goal + situps / situps_goal) *
         (8 / 3),
       16
     );
@@ -118,9 +124,9 @@ export async function completeWorkoutController(req, res) {
 
     const recordResult = await pool.query(insertRecordQuery, [
       userId,
-      pushUps,
+      pushups,
       squats,
-      sitUps,
+      situps,
       runningDistance,
     ]);
 
@@ -131,6 +137,37 @@ export async function completeWorkoutController(req, res) {
     });
   } catch (error) {
     console.error("Error trying to register workout: ", error);
+    res.status(500).json({ message: "Erro no servidor interno." });
+  }
+}
+
+export async function getWorkoutHistoryController(req, res) {
+  const userId = req.userId;
+
+  const { start, end } = req.query;
+
+  const endDate = end || new Date().toISOString().substring(0, 10);
+  const startDate = start || getDate12MonthsAgo();
+
+  try {
+    const result = await pool.query(
+      `
+      SELECT  record_date,
+              pushups,
+              squats,
+              situps,
+              running_distance
+      FROM daily_workout_records
+      WHERE user_id = $1
+      AND record_date BETWEEN $2 AND $3
+      ORDER BY record_date ASC;
+      `,
+      [userId, startDate, endDate]
+    );
+
+    res.status(200).json({ history: result.rows });
+  } catch (error) {
+    console.error("Erro ao obter histórico de treino:", error);
     res.status(500).json({ message: "Erro no servidor interno." });
   }
 }

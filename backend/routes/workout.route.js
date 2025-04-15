@@ -9,12 +9,14 @@ import {
 
 import setWorkoutController, {
   completeWorkoutController,
+  getWorkoutHistoryController,
 } from "../controllers/workout/workout.controller.js";
 
 const router = express.Router();
 
 router.get("/get-daily-workout", authenticateUser, getDailyWorkoutController);
 router.get("/get-daily-goals", authenticateUser, getDailyGoalsController);
+router.get("/history", authenticateUser, getWorkoutHistoryController);
 
 router.post("/set-workout", authenticateUser, setWorkoutController);
 router.post("/complete-workout", authenticateUser, completeWorkoutController);

@@ -6,10 +6,10 @@ await pool.query(
         id SERIAL PRIMARY KEY,
         user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
         record_date DATE NOT NULL DEFAULT CURRENT_DATE,
-        flexoes INTEGER DEFAULT 0,
-        agachamentos INTEGER DEFAULT 0,
-        abdominais INTEGER DEFAULT 0,
-        corrida FLOAT DEFAULT 0,s
+        pushups INTEGER DEFAULT 0,
+        squats INTEGER DEFAULT 0,
+        situps INTEGER DEFAULT 0,
+        running_distance FLOAT DEFAULT 0,
         created_at TIMESTAMP DEFAULT NOW(),
         updated_at TIMESTAMP DEFAULT NOW(),
         UNIQUE(user_id, record_date)
