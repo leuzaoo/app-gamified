@@ -7,6 +7,7 @@ import DailyWorkoutRecordForm from "../components/forms/DailyWorkoutRecordForm";
 import PlayerStats from "../components/ui/PlayerStats";
 import DailyQuests from "../components/ui/DailyQuests";
 import Navbar from "../components/ui/Navbar";
+import WorkoutHistoryHeatmap from "../components/ui/WorkoutHistoryHeatmap";
 
 const DashboardPage = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -45,6 +46,7 @@ const DashboardPage = () => {
       <hr className="mx-4 mt-4 border-t opacity-20" />
       <DailyQuests openDailyRecord={handleOpenDailyRecord} />
       {openDailyRecord ? <DailyWorkoutRecordForm /> : ""}
+      <WorkoutHistoryHeatmap />
     </div>
   );
 };
