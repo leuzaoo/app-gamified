@@ -104,10 +104,8 @@ const DailyQuests = () => {
 
   const handleConfirm = async (exerciseKey) => {
     const newValue = Number(inputs[exerciseKey]) || 0;
-    // Calcula o total atual para este exercício: valor registrado + novo valor
     const totalForExercise = (record[exerciseKey] || 0) + newValue;
 
-    // Define o máximo permitido: dobro da meta
     let maxAllowed = 0;
     if (exerciseKey === "pushups") {
       maxAllowed = 2 * goals.pushups_goal;
