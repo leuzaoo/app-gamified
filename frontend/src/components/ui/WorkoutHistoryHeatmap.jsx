@@ -66,10 +66,8 @@ const WorkoutHistoryHeatmap = () => {
 
   return (
     <div className="px-4">
-      <h2 className="mb-4 text-2xl font-medium uppercase">
-        Calendário de Treino (GitHub Style)
-      </h2>
-      <div className="mb-4 flex items-center gap-4">
+      <div className="mb-4 flex items-center justify-between gap-4">
+        <h2 className="text-lg font-medium uppercase">Histórico de treinos</h2>
         <select
           id="year-select"
           value={selectedYear}
@@ -77,7 +75,7 @@ const WorkoutHistoryHeatmap = () => {
             setLoading(true);
             setSelectedYear(Number(e.target.value));
           }}
-          className="bg-dark-purple border px-2 py-1"
+          className="bg-primary-blue rounded-sm px-3 py-1 text-xs"
         >
           {availableYears.map((year) => (
             <option key={year} value={year}>
