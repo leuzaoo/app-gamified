@@ -7,7 +7,6 @@ import SetUsernamePage from "./pages/SetUsernamePage";
 import SetWorkoutPage from "./pages/SetWorkoutPage";
 import DashboardPage from "./pages/DashboardPage";
 import RegisterPage from "./pages/RegisterPage";
-import Footer from "./components/ui/Footer";
 import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
 
@@ -61,8 +60,7 @@ const RedirectAuthenticatedUser = ({ children }) => {
 };
 
 function App() {
-  const { isCheckingAuth, authCheck, user } = useAuthStore();
-  console.log("Usuário logado: ", user);
+  const { isCheckingAuth, authCheck } = useAuthStore();
 
   useEffect(() => {
     authCheck();
@@ -120,7 +118,6 @@ function App() {
           }
         />
       </Routes>
-      <Footer />
     </>
   );
 }
