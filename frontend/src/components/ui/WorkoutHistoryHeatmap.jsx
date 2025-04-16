@@ -138,19 +138,19 @@ const WorkoutHistoryHeatmap = () => {
         <div
           className="mr-1 h-4 w-4 rounded"
           style={{ backgroundColor: "rgba(34,197,94,0.3)" }}
-        ></div>
+        />
         <div
           className="mr-1 h-4 w-4 rounded"
           style={{ backgroundColor: "rgba(34,197,94,0.5)" }}
-        ></div>
+        />
         <div
           className="mr-1 h-4 w-4 rounded"
           style={{ backgroundColor: "rgba(34,197,94,0.7)" }}
-        ></div>
+        />
         <div
           className="mr-1 h-4 w-4 rounded"
           style={{ backgroundColor: "rgba(34,197,94,1)" }}
-        ></div>
+        />
         <span className="ml-2">Mais</span>
       </div>
     </div>
