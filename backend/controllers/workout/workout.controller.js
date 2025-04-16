@@ -143,10 +143,26 @@ export async function completeWorkoutController(req, res) {
       INSERT INTO daily_workout_records (user_id, pushups, squats, situps, running_distance)
       VALUES ($1, $2, $3, $4, $5)
       ON CONFLICT (user_id, record_date) DO UPDATE
-      SET pushups = LEAST(daily_workout_records.pushups + EXCLUDED.pushups, $6),
-          squats = LEAST(daily_workout_records.squats + EXCLUDED.squats, $7),
-          situps = LEAST(daily_workout_records.situps + EXCLUDED.situps, $8),
-          running_distance = LEAST(daily_workout_records.running_distance + EXCLUDED.running_distance, $9),
+      SET pushups = CASE 
+                      WHEN daily_workout_records.pushups + EXCLUDED.pushups > $6 
+                      THEN $6 
+                      ELSE daily_workout_records.pushups + EXCLUDED.pushups 
+                    END,
+          squats = CASE 
+                     WHEN daily_workout_records.squats + EXCLUDED.squats > $7 
+                     THEN $7 
+                     ELSE daily_workout_records.squats + EXCLUDED.squats 
+                   END,
+          situps = CASE 
+                     WHEN daily_workout_records.situps + EXCLUDED.situps > $8 
+                     THEN $8 
+                     ELSE daily_workout_records.situps + EXCLUDED.situps 
+                   END,
+          running_distance = CASE 
+                               WHEN daily_workout_records.running_distance + EXCLUDED.running_distance > $9 
+                               THEN $9 
+                               ELSE daily_workout_records.running_distance + EXCLUDED.running_distance 
+                             END,
           updated_at = NOW()
       RETURNING *;
     `;
@@ -164,7 +180,7 @@ export async function completeWorkoutController(req, res) {
     ]);
 
     res.status(200).json({
-      message: "Treino registrado com sucesso! Página será recarregada.",
+      message: "Treino registrado com sucesso!",
       updatedStats: userResult.rows[0],
       dailyRecord: recordResult.rows[0],
     });
