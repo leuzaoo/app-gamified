@@ -1,5 +1,5 @@
+import { CheckIcon, PencilIcon, XIcon } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import { PencilIcon } from "lucide-react";
 import toast from "react-hot-toast";
 
 import { useWorkoutStore } from "../../store/workout.store";
@@ -141,6 +141,11 @@ const DailyQuests = () => {
     }
   };
 
+  const handleCancel = (exerciseKey) => {
+    setInputs((prev) => ({ ...prev, [exerciseKey]: "" }));
+    setShowInputs((prev) => ({ ...prev, [exerciseKey]: false }));
+  };
+
   return (
     <section className="p-4">
       <div className="mb-4 flex">
@@ -157,41 +162,51 @@ const DailyQuests = () => {
               key={mission.id}
               className="flex items-center justify-between pb-2"
             >
-              <div>
-                {mission.title} [{mission.progress}/{mission.goal}
-                {mission.unit}]
-              </div>
+              <span>{mission.title}</span>
 
-              {!showInputs[mission.key] ? (
-                <button
-                  onClick={() =>
-                    setShowInputs((prev) => ({ ...prev, [mission.key]: true }))
-                  }
-                >
-                  <PencilIcon />
-                </button>
-              ) : (
-                <div className="ml-2 flex items-center gap-2">
-                  <input
-                    type="number"
-                    value={inputs[mission.key]}
-                    onChange={(e) =>
-                      setInputs((prev) => ({
+              <div className="flex items-center gap-4">
+                [{mission.progress}/{mission.goal}
+                {mission.unit}]
+                {!showInputs[mission.key] ? (
+                  <button
+                    onClick={() =>
+                      setShowInputs((prev) => ({
                         ...prev,
-                        [mission.key]: e.target.value,
+                        [mission.key]: true,
                       }))
                     }
-                    placeholder="0"
-                    className="w-16 rounded border px-1 text-xs"
-                  />
-                  <button
-                    className="rounded bg-green-500 px-2 py-1 text-xs text-white hover:bg-green-600"
-                    onClick={() => handleConfirm(mission.key)}
                   >
-                    Confirmar
+                    <PencilIcon />
                   </button>
-                </div>
-              )}
+                ) : (
+                  <div className="flex items-center gap-4">
+                    <input
+                      type="number"
+                      value={inputs[mission.key]}
+                      onChange={(e) =>
+                        setInputs((prev) => ({
+                          ...prev,
+                          [mission.key]: e.target.value,
+                        }))
+                      }
+                      placeholder="0"
+                      className="w-12 rounded border px-1 text-center"
+                    />
+                    <button
+                      className="rounded bg-green-500 p-1"
+                      onClick={() => handleConfirm(mission.key)}
+                    >
+                      <CheckIcon />
+                    </button>
+                    <button
+                      className="rounded bg-red-500 p-1"
+                      onClick={() => handleCancel(mission.key)}
+                    >
+                      <XIcon />
+                    </button>
+                  </div>
+                )}
+              </div>
             </li>
           ))}
         </ul>
