@@ -1,6 +1,7 @@
-import axios from "axios";
-import { create } from "zustand";
+import toast from "react-hot-toast";
 import api from "../services/api";
+import { create } from "zustand";
+import axios from "axios";
 
 axios.defaults.withCredentials = true;
 
@@ -44,6 +45,7 @@ export const useWorkoutStore = create((set) => ({
         runningDistance,
       });
       set({ isLoading: false, message: response?.data?.message });
+      toast.success(response?.data?.message);
       return response.data;
     } catch (error) {
       set({

@@ -3,7 +3,6 @@ import React, { useState } from "react";
 
 import { useAuthStore } from "./../store/auth.store";
 
-import DailyWorkoutRecordForm from "../components/forms/DailyWorkoutRecordForm";
 import PlayerStats from "../components/ui/PlayerStats";
 import DailyQuests from "../components/ui/DailyQuests";
 import Navbar from "../components/ui/Navbar";
@@ -11,7 +10,6 @@ import WorkoutHistoryHeatmap from "../components/ui/WorkoutHistoryHeatmap";
 
 const DashboardPage = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [openDailyRecord, setOpenDailyRecord] = useState(false);
 
   const { user, logout, isLoading } = useAuthStore();
 
@@ -21,10 +19,6 @@ const DashboardPage = () => {
 
   const handleLogout = async () => {
     await logout();
-  };
-
-  const handleOpenDailyRecord = () => {
-    setOpenDailyRecord(!openDailyRecord);
   };
 
   if (isLoading) {
@@ -44,8 +38,7 @@ const DashboardPage = () => {
       />
       <PlayerStats user={user} />
       <hr className="mx-4 mt-4 border-t opacity-20" />
-      <DailyQuests openDailyRecord={handleOpenDailyRecord} />
-      {openDailyRecord ? <DailyWorkoutRecordForm /> : ""}
+      <DailyQuests />
       <WorkoutHistoryHeatmap />
     </div>
   );
