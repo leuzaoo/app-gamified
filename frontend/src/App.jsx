@@ -7,6 +7,7 @@ import SetUsernamePage from "./pages/SetUsernamePage";
 import SetWorkoutPage from "./pages/SetWorkoutPage";
 import DashboardPage from "./pages/DashboardPage";
 import RegisterPage from "./pages/RegisterPage";
+import Footer from "./components/ui/Footer";
 import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
 
@@ -75,49 +76,52 @@ function App() {
     );
 
   return (
-    <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route
-        path="/dashboard"
-        element={
-          <ProtectedRoute>
-            <DashboardPage />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/set-username"
-        element={
-          <ProtectedRoute>
-            <SetUsernamePage />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/set-workout"
-        element={
-          <ProtectedRoute>
-            <SetWorkoutPage />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/register"
-        element={
-          <RedirectAuthenticatedUser>
-            <RegisterPage />
-          </RedirectAuthenticatedUser>
-        }
-      />
-      <Route
-        path="/login"
-        element={
-          <RedirectAuthenticatedUser>
-            <LoginPage />
-          </RedirectAuthenticatedUser>
-        }
-      />
-    </Routes>
+    <>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <DashboardPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/set-username"
+          element={
+            <ProtectedRoute>
+              <SetUsernamePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/set-workout"
+          element={
+            <ProtectedRoute>
+              <SetWorkoutPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <RedirectAuthenticatedUser>
+              <RegisterPage />
+            </RedirectAuthenticatedUser>
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <RedirectAuthenticatedUser>
+              <LoginPage />
+            </RedirectAuthenticatedUser>
+          }
+        />
+      </Routes>
+      <Footer />
+    </>
   );
 }
 
