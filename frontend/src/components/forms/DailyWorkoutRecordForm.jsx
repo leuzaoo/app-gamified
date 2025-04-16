@@ -2,8 +2,6 @@ import React, { useState } from "react";
 
 import { useWorkoutStore } from "./../../store/workout.store";
 
-import NotificationAlert from "../ui/NotificationAlert";
-
 const DailyWorkoutRecordForm = () => {
   const [pushUps, setPushUps] = useState("");
   const [squats, setSquats] = useState("");
@@ -34,7 +32,7 @@ const DailyWorkoutRecordForm = () => {
       <h2 className="mb-4 text-center text-xl font-bold">
         Registro do Treino Diário
       </h2>
-      {error && <NotificationAlert message={error} />}
+      {error && <div className="text-red-500 mb-4">{error}</div>}
       {message && <p className="mb-4 text-center text-green-600">{message}</p>}
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="flex items-center justify-between">

@@ -79,6 +79,35 @@ export async function completeWorkoutController(req, res) {
     const { pushups_goal, squats_goal, situps_goal, running_goal } =
       goalsRes.rows[0];
 
+    if (pushups > 2 * pushups_goal) {
+      return res.status(400).json({
+        message: `Não é possível registrar mais que o dobro da meta de flexões (seu caso é: ${
+          2 * pushups_goal
+        }).`,
+      });
+    }
+    if (squats > 2 * squats_goal) {
+      return res.status(400).json({
+        message: `Não é possível registrar mais que o dobro da meta de agachamentos (seu caso é: ${
+          2 * squats_goal
+        }).`,
+      });
+    }
+    if (situps > 2 * situps_goal) {
+      return res.status(400).json({
+        message: `Não é possível registrar mais que o dobro da meta de abdominais (seu caso é: ${
+          2 * situps_goal
+        }).`,
+      });
+    }
+    if (runningDistance > 2 * running_goal) {
+      return res.status(400).json({
+        message: `Não é possível registrar mais que o dobro da meta de corrida (seu caso é: ${
+          2 * running_goal
+        } km).`,
+      });
+    }
+
     const strengthPoints = Math.min(
       (pushups / pushups_goal + squats / squats_goal + situps / situps_goal) *
         (8 / 3),
@@ -114,10 +143,10 @@ export async function completeWorkoutController(req, res) {
       INSERT INTO daily_workout_records (user_id, pushups, squats, situps, running_distance)
       VALUES ($1, $2, $3, $4, $5)
       ON CONFLICT (user_id, record_date) DO UPDATE
-      SET pushups = daily_workout_records.pushups + EXCLUDED.pushups,
-          squats = daily_workout_records.squats + EXCLUDED.squats,
-          situps = daily_workout_records.situps + EXCLUDED.situps,
-          running_distance = daily_workout_records.running_distance + EXCLUDED.running_distance,
+      SET pushups = LEAST(daily_workout_records.pushups + EXCLUDED.pushups, $6),
+          squats = LEAST(daily_workout_records.squats + EXCLUDED.squats, $7),
+          situps = LEAST(daily_workout_records.situps + EXCLUDED.situps, $8),
+          running_distance = LEAST(daily_workout_records.running_distance + EXCLUDED.running_distance, $9),
           updated_at = NOW()
       RETURNING *;
     `;
@@ -128,6 +157,10 @@ export async function completeWorkoutController(req, res) {
       squats,
       situps,
       runningDistance,
+      2 * pushups_goal,
+      2 * squats_goal,
+      2 * situps_goal,
+      2 * running_goal,
     ]);
 
     res.status(200).json({
