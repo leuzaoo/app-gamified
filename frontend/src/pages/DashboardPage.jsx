@@ -39,7 +39,9 @@ const DashboardPage = () => {
       <PlayerStats user={user} />
       <hr className="mx-4 mt-4 border-t opacity-20" />
       <DailyQuests />
+      <hr className="mx-4 my-4 border-t opacity-20" />
       <WorkoutHistoryHeatmap />
+      <hr className="mx-4 my-4 border-t opacity-20" />
     </div>
   );
 };
