@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import axios from "axios";
+
 import api from "../services/api";
 
 axios.defaults.withCredentials = true;
@@ -115,4 +116,6 @@ export const useAuthStore = create((set) => ({
       });
     }
   },
+
+  clearError: () => set({ error: null, message: null }),
 }));

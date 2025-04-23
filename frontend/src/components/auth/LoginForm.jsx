@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import { Loader2Icon } from "lucide-react";
-import React, { useState } from "react";
 
 import { useAuthStore } from "../../store/auth.store";
 
@@ -8,10 +8,15 @@ import Footer from "../ui/Footer";
 
 const LoginForm = () => {
   const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { login, isLoading, error, message } = useAuthStore();
+  const { login, isLoading, error, message, clearError } = useAuthStore();
+
+  useEffect(() => {
+    clearError();
+  }, [clearError]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
