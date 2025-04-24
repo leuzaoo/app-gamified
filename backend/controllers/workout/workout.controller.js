@@ -71,7 +71,7 @@ export async function addExerciseController(req, res) {
     if (workoutRes.rows.length === 0) {
       return res
         .status(404)
-        .json({ message: "Treino não encontrado ou sem permissão." });
+        .json({ message: "Treino não encontrado ou você não tem permissão para acessar." });
     }
 
     await pool.query(
