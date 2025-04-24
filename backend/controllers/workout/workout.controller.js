@@ -28,7 +28,7 @@ export async function createWorkoutController(req, res) {
     return res.status(201).json({ workout });
   } catch (error) {
     console.error("Error creating custom workout: ", error);
-    return res.status(500).json({ message: "Erro interno ao criar treino." });
+    return res.status(500).json({ message: "Erro interno ao tentar criar o treino." });
   }
 }
 
