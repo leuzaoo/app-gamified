@@ -122,7 +122,7 @@ export async function listWorkoutsController(req, res) {
     return res.status(200).json({ workouts: result.rows });
   } catch (error) {
     console.error("Error listing workouts:", error);
-    return res.status(500).json({ message: "Erro interno ao listar treinos." });
+    return res.status(500).json({ message: "Erro interno ao tentar listar os treinos." });
   }
 }
 
