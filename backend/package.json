@@ -9,7 +9,8 @@
     "create:userstable": "node ./scripts/userTable.js",
     "create:workouttable": "node ./scripts/workoutTable.js",
     "create:dailyworkouttable": "node ./scripts/dailyWorkoutTable.js",
-    "create:workoutgoalstable": "node ./scripts/workoutGoalsTable.js"
+    "create:workoutgoalstable": "node ./scripts/workoutGoalsTable.js",
+    "create:customworkouttable": "node ./scripts/customWorkoutsTable.js"
   },
   "keywords": [],
   "author": "",
