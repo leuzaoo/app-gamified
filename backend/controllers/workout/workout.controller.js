@@ -40,22 +40,27 @@ export async function addExerciseController(req, res) {
   if (isNaN(workoutId)) {
     return res.status(400).json({ message: "ID de treino inválido." });
   }
+  
   if (!name || !metric_type || !attribute || goal_value == null) {
-    return res.status(400).json({ message: "Dados do exercício incompletos." });
+    return res.status(400).json({ message: "Preencha todos os campos." });
   }
+  
   if (!["reps", "distance"].includes(metric_type)) {
-    return res.status(400).json({ message: "metric_type inválido." });
+    return res.status(400).json({ message: "O tipo de métrica está inválido." });
   }
+  
   if (
     !["strength", "agility", "vitality", "intelligence"].includes(attribute)
   ) {
-    return res.status(400).json({ message: "attribute inválido." });
+    return res.status(400).json({ message: "Atributos inválidos." });
   }
+  
   const goalNum = Number(goal_value);
+  
   if (isNaN(goalNum) || goalNum <= 0) {
     return res
       .status(400)
-      .json({ message: "goal_value deve ser um número positivo." });
+      .json({ message: "Meta deve ser maior ou igual a 1." });
   }
 
   try {
