@@ -7,9 +7,14 @@ import {
   getDailyWorkoutController,
 } from "../controllers/workout/dailyWorkout.controller.js";
 
-import setWorkoutController, {
+import {
+  addExerciseController,
   completeWorkoutController,
+  createWorkoutController,
+  getCustomWorkoutController,
   getWorkoutHistoryController,
+  listWorkoutsController,
+  setWorkoutController,
 } from "../controllers/workout/workout.controller.js";
 
 const router = express.Router();
@@ -17,8 +22,12 @@ const router = express.Router();
 router.get("/get-daily-workout", authenticateUser, getDailyWorkoutController);
 router.get("/get-daily-goals", authenticateUser, getDailyGoalsController);
 router.get("/history", authenticateUser, getWorkoutHistoryController);
+router.get("/:id", authenticateUser, getCustomWorkoutController);
+router.get("/", authenticateUser, listWorkoutsController);
 
+router.post("/", authenticateUser, createWorkoutController);
 router.post("/set-workout", authenticateUser, setWorkoutController);
+router.post("/:id/exercises", authenticateUser, addExerciseController);
 router.post("/complete-workout", authenticateUser, completeWorkoutController);
 
 export default router;
