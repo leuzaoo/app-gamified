@@ -11,7 +11,7 @@ export async function createWorkoutController(req, res) {
   const { name } = req.body;
 
   if (!name || name.trim().length === 0) {
-    return res.status(400).json({ message: "O nome do treino é obrigatório." });
+    return res.status(400).json({ message: "Insira um nome para seu treino." });
   }
 
   try {
