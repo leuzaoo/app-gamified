@@ -1,25 +1,16 @@
+import React from "react";
+
 import { Loader2Icon } from "lucide-react";
-import React, { useState } from "react";
 
 import { useAuthStore } from "./../store/auth.store";
 
+import WorkoutHistoryHeatmap from "../components/ui/WorkoutHistoryHeatmap";
 import PlayerStats from "../components/ui/PlayerStats";
 import DailyQuests from "../components/ui/DailyQuests";
 import Navbar from "../components/ui/Navbar";
-import WorkoutHistoryHeatmap from "../components/ui/WorkoutHistoryHeatmap";
 
 const DashboardPage = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
-
-  const { user, logout, isLoading } = useAuthStore();
-
-  const handleMenuOpen = () => {
-    setMenuOpen(!menuOpen);
-  };
-
-  const handleLogout = async () => {
-    await logout();
-  };
+  const { user, isLoading } = useAuthStore();
 
   if (isLoading) {
     return (
@@ -31,11 +22,7 @@ const DashboardPage = () => {
 
   return (
     <div>
-      <Navbar
-        menuOpen={menuOpen}
-        handleMenuOpen={handleMenuOpen}
-        handleLogout={handleLogout}
-      />
+      <Navbar />
       <PlayerStats user={user} />
       <hr className="mx-4 mt-4 border-t opacity-20" />
       <DailyQuests />
