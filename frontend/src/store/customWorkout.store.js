@@ -21,6 +21,7 @@ export const useCustomWorkoutStore = create((set) => ({
     try {
       const res = await api.get(API_URL);
       set({ workouts: res.data.workouts, isLoading: false });
+      return res.data;
     } catch (error) {
       set({ error: error.message, isLoading: false });
     }
@@ -59,6 +60,21 @@ export const useCustomWorkoutStore = create((set) => ({
       }));
     } catch (err) {
       set({ error: err.message, isLoading: false });
+    }
+  },
+
+  getExercises: async () => {
+    set({ isLoading: true, error: null });
+    try {
+      const res = await api.get(`${API_URL}/get-exercises`);
+      set({ workouts: res.data.workouts, isLoading: false });
+      return res.data;
+    } catch (error) {
+      set({
+        error: error.response?.data?.message || error.message,
+        isLoading: false,
+      });
+      throw error;
     }
   },
 }));

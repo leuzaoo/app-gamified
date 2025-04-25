@@ -28,7 +28,9 @@ export async function createWorkoutController(req, res) {
     return res.status(201).json({ workout });
   } catch (error) {
     console.error("Error creating custom workout: ", error);
-    return res.status(500).json({ message: "Erro interno ao tentar criar o treino." });
+    return res
+      .status(500)
+      .json({ message: "Erro interno ao tentar criar o treino." });
   }
 }
 
@@ -40,23 +42,25 @@ export async function addExerciseController(req, res) {
   if (isNaN(workoutId)) {
     return res.status(400).json({ message: "ID de treino inválido." });
   }
-  
+
   if (!name || !metric_type || !attribute || goal_value == null) {
     return res.status(400).json({ message: "Preencha todos os campos." });
   }
-  
+
   if (!["reps", "distance"].includes(metric_type)) {
-    return res.status(400).json({ message: "O tipo de métrica está inválido." });
+    return res
+      .status(400)
+      .json({ message: "O tipo de métrica está inválido." });
   }
-  
+
   if (
     !["strength", "agility", "vitality", "intelligence"].includes(attribute)
   ) {
     return res.status(400).json({ message: "Atributos inválidos." });
   }
-  
+
   const goalNum = Number(goal_value);
-  
+
   if (isNaN(goalNum) || goalNum <= 0) {
     return res
       .status(400)
@@ -69,9 +73,10 @@ export async function addExerciseController(req, res) {
       [workoutId, userId]
     );
     if (workoutRes.rows.length === 0) {
-      return res
-        .status(404)
-        .json({ message: "Treino não encontrado ou você não tem permissão para acessar." });
+      return res.status(404).json({
+        message:
+          "Treino não encontrado ou você não tem permissão para acessar.",
+      });
     }
 
     await pool.query(
@@ -102,6 +107,47 @@ export async function addExerciseController(req, res) {
   }
 }
 
+export async function getExercisesWorkoutsController(req, res) {
+  const userId = req.userId;
+
+  try {
+    const result = await pool.query(
+      `
+      SELECT
+        cw.id,
+        cw.name,
+        cw.created_at,
+        -- agrega todos os exercícios nesse array
+        COALESCE(
+          JSON_AGG(
+            JSON_BUILD_OBJECT(
+              'id', ce.id,
+              'name', ce.name,
+              'metric_type', ce.metric_type,
+              'attribute', ce.attribute,
+              'goal_value', ce.goal_value,
+              'created_at', ce.created_at
+            ) ORDER BY ce.created_at
+          ) FILTER (WHERE ce.id IS NOT NULL),
+          '[]'
+        ) AS exercises
+      FROM custom_workouts cw
+      LEFT JOIN custom_exercises ce
+        ON ce.workout_id = cw.id
+      WHERE cw.user_id = $1
+      GROUP BY cw.id, cw.name, cw.created_at
+      ORDER BY cw.created_at DESC;
+      `,
+      [userId]
+    );
+
+    return res.status(200).json({ workouts: result.rows });
+  } catch (error) {
+    console.error("Error listing workouts:", error);
+    return res.status(500).json({ message: "Erro interno ao listar treinos." });
+  }
+}
+
 export async function listWorkoutsController(req, res) {
   const userId = req.userId;
 
@@ -122,7 +168,9 @@ export async function listWorkoutsController(req, res) {
     return res.status(200).json({ workouts: result.rows });
   } catch (error) {
     console.error("Error listing workouts:", error);
-    return res.status(500).json({ message: "Erro interno ao tentar listar os treinos." });
+    return res
+      .status(500)
+      .json({ message: "Erro interno ao tentar listar os treinos." });
   }
 }
 
@@ -214,9 +262,10 @@ export async function getCustomWorkoutController(req, res) {
     );
 
     if (result.rows.length === 0) {
-      return res
-        .status(404)
-        .json({ message: "Treino não encontrado ou você não tem permissão para acessar." });
+      return res.status(404).json({
+        message:
+          "Treino não encontrado ou você não tem permissão para acessar.",
+      });
     }
 
     const workout = result.rows[0];

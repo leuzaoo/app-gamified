@@ -12,6 +12,7 @@ import {
   completeWorkoutController,
   createWorkoutController,
   getCustomWorkoutController,
+  getExercisesWorkoutsController,
   getWorkoutHistoryController,
   listWorkoutsController,
   setWorkoutController,
@@ -19,15 +20,22 @@ import {
 
 const router = express.Router();
 
-router.get("/get-daily-workout", authenticateUser, getDailyWorkoutController);
-router.get("/get-daily-goals", authenticateUser, getDailyGoalsController);
-router.get("/history", authenticateUser, getWorkoutHistoryController);
-router.get("/:id", authenticateUser, getCustomWorkoutController);
-router.get("/", authenticateUser, listWorkoutsController);
+router.use(authenticateUser);
 
-router.post("/", authenticateUser, createWorkoutController);
-router.post("/set-workout", authenticateUser, setWorkoutController);
-router.post("/:id/exercises", authenticateUser, addExerciseController);
-router.post("/complete-workout", authenticateUser, completeWorkoutController);
+router.get("/get-daily-workout", getDailyWorkoutController);
+router.get("/get-daily-goals", getDailyGoalsController);
+router.get("/history", getWorkoutHistoryController);
+router.get("/get-exercises", getExercisesWorkoutsController);
+
+router.get("/:id", getCustomWorkoutController);
+
+router.get("/", listWorkoutsController);
+
+router.post("/set-workout", setWorkoutController);
+router.post("/complete-workout", completeWorkoutController);
+
+router.post("/:id/exercises", addExerciseController);
+
+router.post("/", createWorkoutController);
 
 export default router;
