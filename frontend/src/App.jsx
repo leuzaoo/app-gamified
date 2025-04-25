@@ -7,6 +7,7 @@ import SetUsernamePage from "./pages/SetUsernamePage";
 import SetWorkoutPage from "./pages/SetWorkoutPage";
 import DashboardPage from "./pages/DashboardPage";
 import RegisterPage from "./pages/RegisterPage";
+import WorkoutsPage from "./pages/WorkoutsPage";
 import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
 
@@ -98,6 +99,14 @@ function App() {
           element={
             <ProtectedRoute>
               <SetWorkoutPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/workouts"
+          element={
+            <ProtectedRoute>
+              <WorkoutsPage />
             </ProtectedRoute>
           }
         />
