@@ -23,9 +23,8 @@ const Navbar = () => {
   return (
     <header className="flex w-full items-center justify-between gap-4 p-4 text-3xl uppercase">
       <Link to="/dashboard">
-        <img src="/vite.svg" alt="Logo" />
+        <img src="/images/logo.svg" alt="Logo" className="size-10" />
       </Link>
-      <p className="hidden lg:block">Archit</p>
 
       <div>
         {menuOpen ? (

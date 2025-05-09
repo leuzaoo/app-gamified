@@ -1,5 +1,3 @@
-import React from "react";
-
 import { Loader2Icon } from "lucide-react";
 
 import { useAuthStore } from "./../store/auth.store";
@@ -21,14 +19,13 @@ const DashboardPage = () => {
   }
 
   return (
-    <div>
+    <div className="mx-auto max-w-5xl">
       <Navbar />
-      <PlayerStats user={user} />
-      <hr className="mx-4 mt-4 border-t opacity-20" />
-      <DailyQuests />
-      <hr className="mx-4 my-4 border-t opacity-20" />
+      <div className="grid-cols-2 lg:grid">
+        <PlayerStats user={user} />
+        <DailyQuests />
+      </div>
       <WorkoutHistoryHeatmap />
-      <hr className="mx-4 my-4 border-t opacity-20" />
     </div>
   );
 };

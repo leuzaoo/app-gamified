@@ -21,7 +21,7 @@ const CountdownTimer = () => {
     } else {
       return (
         <div className="mt-5 flex justify-center">
-          <span className="text-5xl font-extralight">
+          <span className="text-5xl">
             {String(hours).padStart(2, "0")}:{String(minutes).padStart(2, "0")}:
             {String(seconds).padStart(2, "0")}
           </span>
