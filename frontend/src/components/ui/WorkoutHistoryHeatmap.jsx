@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+
 import { useWorkoutStore } from "../../store/workout.store";
 
 import {
@@ -62,10 +63,10 @@ const WorkoutHistoryHeatmap = () => {
   });
   const maxIntensity = Math.max(...intensities, 1);
 
-  const dayLabels = ["", "Seg", "", "Qua", "", "Sex", ""];
+  const dayLabels = ["Seg", "", "Qua", "", "Sex", "", "Dom"];
 
   return (
-    <div className="px-4">
+    <div>
       <div className="mb-4 flex items-center justify-between gap-4">
         <h2 className="text-lg font-medium uppercase">Histórico de treinos</h2>
         <select
@@ -93,7 +94,7 @@ const WorkoutHistoryHeatmap = () => {
             {dayLabels.map((label, idx) => (
               <div
                 key={idx}
-                style={{ height: "1rem", margin: "2px 0" }}
+                style={{ height: "1rem", margin: "1px 0" }}
                 className="w-8 text-right text-xs"
               >
                 {label}
@@ -101,8 +102,8 @@ const WorkoutHistoryHeatmap = () => {
             ))}
           </div>
 
-          <div className="max-w-max overflow-x-auto custom-scrollbar">
-            <div className="flex flex-nowrap gap-[1px] pl-1 pb-2">
+          <div className="custom-scrollbar max-w-max overflow-x-auto">
+            <div className="flex flex-nowrap gap-[1px] pb-2 pl-1">
               {weeks.map((week, wIndex) => (
                 <div
                   key={`week-${wIndex}`}
