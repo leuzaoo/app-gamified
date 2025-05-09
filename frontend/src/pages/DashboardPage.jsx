@@ -25,7 +25,9 @@ const DashboardPage = () => {
         <PlayerStats user={user} />
         <DailyQuests />
       </div>
-      <WorkoutHistoryHeatmap />
+      <div className="px-4">
+        <WorkoutHistoryHeatmap />
+      </div>
     </div>
   );
 };

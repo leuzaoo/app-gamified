@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
-
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { useEffect } from "react";
+
 import { LoaderCircleIcon } from "lucide-react";
 
 import SetUsernamePage from "./pages/SetUsernamePage";
@@ -8,6 +8,7 @@ import SetWorkoutPage from "./pages/SetWorkoutPage";
 import DashboardPage from "./pages/DashboardPage";
 import RegisterPage from "./pages/RegisterPage";
 import WorkoutsPage from "./pages/WorkoutsPage";
+import ProfilePage from "./pages/ProfilePage";
 import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
 
@@ -78,6 +79,14 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route
+          path="/perfil"
+          element={
+            <ProtectedRoute>
+              <ProfilePage />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/dashboard"
           element={
