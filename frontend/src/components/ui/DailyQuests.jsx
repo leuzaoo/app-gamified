@@ -147,7 +147,7 @@ const DailyQuests = () => {
   };
 
   return (
-    <section className="p-4">
+    <section className="p-4 lg:pt-0">
       <div className="mb-4 flex">
         <h1 className="border-b text-2xl uppercase">Missões Diárias</h1>
       </div>
@@ -215,7 +215,7 @@ const DailyQuests = () => {
       <CountdownTimer />
 
       <div className="mt-5 text-center">
-        <p className="text-lg font-light">
+        <p className="text-left text-lg font-light">
           <span className="text-amber-500 uppercase">Aviso: </span>
           Caso você falhe na missão diária, você não ganhará os pontos
           necessários para subir de nível e o{" "}
