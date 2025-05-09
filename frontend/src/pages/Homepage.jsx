@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import React from "react";
 
 import { Character, HomeBg, Logo } from "../image-datas/imageLinks";
 
