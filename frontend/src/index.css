@@ -24,3 +24,22 @@ body {
   color: var(--light);
   font-family: "Prompt", sans-serif;
 }
+
+.custom-scrollbar::-webkit-scrollbar {
+  height: 8px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #2d2d37;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #4453f2;
+  border-radius: 4px;
+  border: 2px solid #1e1e2e;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #2563eb;
+}
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #4453f2 #2d2d37;
+}

@@ -101,8 +101,8 @@ const WorkoutHistoryHeatmap = () => {
             ))}
           </div>
 
-          <div className="max-w-max overflow-x-auto">
-            <div className="flex flex-nowrap gap-[1px] pl-1">
+          <div className="max-w-max overflow-x-auto custom-scrollbar">
+            <div className="flex flex-nowrap gap-[1px] pl-1 pb-2">
               {weeks.map((week, wIndex) => (
                 <div
                   key={`week-${wIndex}`}
@@ -118,10 +118,10 @@ const WorkoutHistoryHeatmap = () => {
                     return (
                       <div
                         key={dateStr}
-                        className="m-[1px] h-3.5 w-3.5 rounded"
+                        className="m-[1px] h-4 w-4 rounded"
                         style={style}
                         title={`${dateStr}: intensidade ${intensity}`}
-                      ></div>
+                      />
                     );
                   })}
                 </div>
